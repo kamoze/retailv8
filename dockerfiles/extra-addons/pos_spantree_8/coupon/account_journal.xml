@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="coupon_journal_acespritech" model="account.journal">
+            <field name="name">Coupon Journal</field>
+            <field name="code">CPNJ</field>
+            <field name="type">cash</field>
+            <field name="journal_user">True</field>
+        </record>
+        
+        <record id="redeem_journal_acespritech" model="account.journal">
+	        <field name="name">Redeem Journal</field>
+	        <field name="code">RDMJ</field>
+	        <field name="type">cash</field>
+	        <field name="journal_user">True</field>
+	    </record>
+
+    </data>
+</openerp>

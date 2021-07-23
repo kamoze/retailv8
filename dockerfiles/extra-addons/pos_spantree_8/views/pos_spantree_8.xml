@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+    
+        <template id="assets_backend" name="pos_spantree_8 assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_spantree_8/static/src/js/pos.js"></script>
+                <script type="text/javascript" src="/pos_spantree_8/static/src/js/screens.js"></script>
+                <script type="text/javascript" src="/pos_spantree_8/static/src/js/jquery-barcode.js"></script>
+            </xpath>
+        </template>
+        
+        <template id="index" name="pos_spantree_8 index" inherit_id="point_of_sale.index">
+	        <xpath expr="." position="inside">
+	        	<link rel="stylesheet" href="/pos_spantree_8/static/src/css/pos.css" id="pos-stylesheet"/>
+	        	<link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>
+	        </xpath>
+	    </template>
+	    
+    </data>
+</openerp>

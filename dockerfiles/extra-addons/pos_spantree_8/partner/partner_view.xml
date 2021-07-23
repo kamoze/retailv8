@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem id="menu_pos_loyalty" name="POS Loyalty" 
+                    parent="point_of_sale.menu_point_root"/>
+
+        <!-- Partner -->
+
+        <record id="acespritech_view_partner_form" model="ir.ui.view">
+            <field name="name">acespritech.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="POS Loyalty">
+                        <group col="4" colspan="4">
+                            <field name="member"/>
+                            <field name="member_cat_id"/>
+                            <field name="membership_date"/>
+                            <field name="last_purchase_date"/>
+                            <field name="total_points"/>
+                            <field name="total_redeem_points"/>
+                            <field name="remain_redeem_points"/>
+                        </group>
+                        <separator string="Member Points" colspan="4"/>
+                        <field name="member_point_ids" colspan="4" nolabel="1">
+                            <tree string="Member Points">
+                                <field name="pos_order_id"/>
+                                <field name="date"/>
+                                <field name="amount_total"/>
+                                <field name="point"/>
+                            </tree>
+                            <form string="Member Points">
+                                <group col="4" colspan="4">
+                                    <field name="pos_order_id"/>
+                                    <field name="date"/>
+                                    <field name="amount_total"/>
+                                    <field name="point"/>
+                                </group>
+                            </form>
+                        </field>
+                        <separator string="Points Redeem" colspan="4"/>
+                        <field name="point_redeem_ids" colspan="4" nolabel="1">
+                            <tree string="Point Redeem">
+                                <field name="pos_order_id"/>
+                                <field name="date"/>
+                                <field name="amount_total"/>
+                                <field name="amount_point"/>
+                                <field name="point"/>
+                            </tree>
+                            <form string="Point Redeem">
+                                <group col="4" colspan="4">
+                                    <field name="pos_order_id"/>
+                                    <field name="date"/>
+                                    <field name="amount_total"/>
+                                    <field name="amount_point"/>
+                                    <field name="point"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="action_member_form" model="ir.actions.act_window">
+            <field name="name">Members</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('member','=',1)]</field>
+            <field name="context">{'default_member':1, 'search_default_member':1}</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <menuitem id="menu_member" parent="menu_pos_loyalty" 
+                  action="action_member_form"/>
+
+        <!-- Member Category -->
+
+        <record id="view_member_category_form" model="ir.ui.view">
+            <field name="name">member.category.form</field>
+            <field name="model">member.category</field>
+            <field name="arch" type="xml">
+                <form string="Member Category">
+                    <group col="4" colspan="4">
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="enable_redeemtion"/>
+                        <field name="purchase_limit"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <group string="Convert Point into Price">
+                            <field name="point_2_price"/>
+                        </group>
+                        <group string="Convert Price into Point">
+                            <field name="price_2_point"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_member_category_tree" model="ir.ui.view">
+            <field name="name">member.category.tree</field>
+            <field name="model">member.category</field>
+            <field name="arch" type="xml">
+                <tree string="Member Category">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="enable_redeemtion"/>
+                    <field name="purchase_limit"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_member_category" model="ir.actions.act_window">
+            <field name="name">Member Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">member.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_member_category" parent="menu_pos_loyalty" 
+                  action="action_member_category"/>
+
+        <!-- Member Point -->
+
+        <record id="view_member_point_search" model="ir.ui.view">
+            <field name="name">member.point.search</field>
+            <field name="model">member.point</field>
+            <field name="arch" type="xml">
+                <search string="Member Points">
+                    <field name="partner_id" string="Member"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Members" name="member" domain="[]"  context="{'group_by':'partner_id'}"/>
+                        <filter string="Date" name="date" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_member_point_form" model="ir.ui.view">
+            <field name="name">member.point.form</field>
+            <field name="model">member.point</field>
+            <field name="arch" type="xml">
+                <form string="Member Points">
+                    <group col="4" colspan="4">
+                        <field name="partner_id" readonly="1"/>
+                        <field name="pos_order_id" readonly="1"/>
+                        <field name="date" readonly="1"/>
+                        <field name="amount_total" readonly="1"/>
+                        <field name="point" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_member_point_tree" model="ir.ui.view">
+            <field name="name">member.point.tree</field>
+            <field name="model">member.point</field>
+            <field name="arch" type="xml">
+                <tree string="Member Points">
+                    <field name="partner_id"/>
+                    <field name="pos_order_id"/>
+                    <field name="date"/>
+                    <field name="amount_total"/>
+                    <field name="point"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_member_point" model="ir.actions.act_window">
+            <field name="name">Member Points</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">member.point</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_member_point_search"/>
+        </record>
+
+        <menuitem id="menu_member_point" parent="menu_pos_loyalty" 
+                  action="action_member_point"/>
+
+        <!-- Point Redemption -->
+
+        <record id="view_point_redeem_search" model="ir.ui.view">
+            <field name="name">point.redeem.search</field>
+            <field name="model">point.redeem</field>
+            <field name="arch" type="xml">
+                <search string="Point Redemption">
+                    <field name="partner_id" string="Member"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Members" name="member" domain="[]"  context="{'group_by':'partner_id'}"/>
+                        <filter string="Date" name="date" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_point_redeem_form" model="ir.ui.view">
+            <field name="name">point.redeem.form</field>
+            <field name="model">point.redeem</field>
+            <field name="arch" type="xml">
+                <form string="Point Redeem">
+                    <group col="4" colspan="4">
+                        <field name="partner_id" readonly="1"/>
+                        <field name="pos_order_id" readonly="1"/>
+                        <field name="date" readonly="1"/>
+                        <field name="amount_total" readonly="1"/>
+                        <field name="amount_point" readonly="1"/>
+                        <field name="point" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_point_redeem_tree" model="ir.ui.view">
+            <field name="name">point.redeem.tree</field>
+            <field name="model">point.redeem</field>
+            <field name="arch" type="xml">
+                <tree string="Point Redeem">
+                    <field name="partner_id"/>
+                    <field name="pos_order_id"/>
+                    <field name="date"/>
+                    <field name="amount_total"/>
+                    <field name="amount_point"/>
+                    <field name="point"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_point_redeem" model="ir.actions.act_window">
+            <field name="name">Point Redeem</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">point.redeem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_point_redeem_search"/>
+        </record>
+
+        <menuitem id="menu_point_redeem" parent="menu_pos_loyalty" 
+                  action="action_point_redeem"/>
+
+    </data>
+</openerp>

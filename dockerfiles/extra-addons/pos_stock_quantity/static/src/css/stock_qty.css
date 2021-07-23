@@ -1,0 +1,29 @@
+.pos .product-list .qty-tag{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #32a868;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-weight: bold;
+    display: none;
+}
+
+.pos .product-list .product{
+    transition: all 1s ease;
+}
+
+
+.pos .product-list .qty-tag.sold-out{
+    background: #EF5350;
+}
+
+
+.pos .product-list .product.disable{
+    pointer-events: none;
+    opacity: 0.5;
+}
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model="ir.cron" id="get_daily_report_cron">
+            <field name="name">Daily Report</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'product.product'"/>
+            <field name="function" eval="'get_daily_report'"/>
+            <field name="args" eval="'()'" />
+        </record>
+        <record model="ir.cron" id="get_weekly_report_cron">
+            <field name="name">Weekly Report</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'product.product'"/>
+            <field name="function" eval="'get_weekly_report'"/>
+            <field name="args" eval="'()'" />
+        </record>
+        <record model="ir.cron" id="get_monthly_report_cron">
+            <field name="name">Monthly Report</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'product.product'"/>
+            <field name="function" eval="'get_monthly_report'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</openerp>

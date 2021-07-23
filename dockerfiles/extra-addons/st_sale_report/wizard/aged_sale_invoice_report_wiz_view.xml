@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="aged_sale_report_invoice_wiz_form">
+			<field name="name">aged.sale.report.invoice.wiz.form</field>
+			<field name="model">aged.sale.report.invoice.wiz</field>
+			<field name="arch" type="xml">
+				<form string="Aged Sale Order Report" version="7.0">
+					<group>
+						<field name="range"/>
+					</group>
+					<group>
+						<group>
+							<field name="start_date" attrs="{'invisible': [('range','=','month')]}"/>
+							<field name="from_period_id" attrs="{'invisible': [('range','=','date')]}"/>
+						</group>
+						<group>
+							<field name="end_date" attrs="{'invisible': [('range','=','month')]}"/>
+							<field name="to_period_id" attrs="{'invisible': [('range','=','date')]}"/>
+						</group>
+					</group>
+					<footer>
+                        <button name="print_report" string="Open aged sale invoice" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="act_aged_sale_report_invoice_wiz">
+			<field name="name">Aged Sale invoice Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">aged.sale.report.invoice.wiz</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		<menuitem id="menu_aged_sale_report_invoice_wiz" name="Aged Sale Invoice Report" 
+			parent="account.menu_finance_reporting" action="act_aged_sale_report_invoice_wiz"/>
+	</data>
+</openerp>

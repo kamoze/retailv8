@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="aged_sale_report_wiz_form">
+			<field name="name">aged.sale.report.wiz.form</field>
+			<field name="model">aged.sale.report.wiz</field>
+			<field name="arch" type="xml">
+				<form string="Aged Sale Order Report" version="7.0">
+					<group>
+						<field name="range"/>
+					</group>
+					<group>
+						<group>
+							<field name="start_date" attrs="{'invisible': [('range','=','month')]}"/>
+							<field name="from_period_id" attrs="{'invisible': [('range','=','date')]}"/>
+						</group>
+						<group>
+							<field name="end_date" attrs="{'invisible': [('range','=','month')]}"/>
+							<field name="to_period_id" attrs="{'invisible': [('range','=','date')]}"/>
+						</group>
+					</group>
+					<footer>
+                        <button name="open_aged_sales" string="Open Aged sales" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="act_aged_sale_report_wiz">
+			<field name="name">Aged Sale Order Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">aged.sale.report.wiz</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	<!-- 	<menuitem id="sale_report_wiz" name="Sale Order Reports" 
+			parent="base.menu_base_partner" />  -->
+		<menuitem id="menu_aged_sale_report_wiz" name="Aged Sale Order Report" 
+			parent="base.next_id_64" action="act_aged_sale_report_wiz"/>
+	</data>
+</openerp>

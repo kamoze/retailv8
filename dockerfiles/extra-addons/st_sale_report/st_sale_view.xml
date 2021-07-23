@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <record id="invoice_tree_report" model="ir.ui.view">
+            <field name="name">account.invoice.tree.report</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice" create='false'>
+                	<field name="name" invisible="1"/>
+                	<field name="number"/>
+                	<field name="date_invoice"/>
+                	<field name="origin"/>
+                    <field name="partner_id"/>
+                    <field name="amount_untaxed" sum="Sub Total"/>
+                    <field name="amount_total" sum="Total"/>
+                    <field name="total_paid" sum="Total Paid"/>
+                    <!-- <field name='total_balance'/>  -->
+                    <field name="shop_id" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_account_invoice_filter_report" model="ir.ui.view">
+            <field name="name">account.invoice.select.report</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice">
+                	<field name="user_id" string="Salesperson"/>
+                	<field name="partner_id" string="Customer"/>
+                	<field name="period_id" string="Month"/>
+                	<field name="shop_id" string="Shop"/>
+                	<filter icon="terp-document-new" string="New Invoice" domain="[('state','=','draft')]"/>
+	                <filter icon="terp-document-open" string="Valid Invoice" domain="[('state','=','open')]"/>
+	                <filter icon="terp-document-paid" string="Paid Invoice" domain="[('state','=','paid')]"/>
+                    <group expand="0" string="Group By...">
+                    	<filter string="Sales Person" icon="terp-personal" domain="[]"  context="{'group_by':'user_id'}"/>
+                        <filter string="Customer" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]"  context="{'group_by':'state'}"/>
+                        <filter string="Month" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
+                        <filter string="Shop" icon="terp-shop" context="{'group_by':'shop_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="action_account_tree_report" model="ir.actions.act_window">
+            <field name="name">Sale Invoice Report</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="invoice_tree_report"/>
+            <field name="search_view_id" ref="view_account_invoice_filter_report" />
+        </record>
+
+        <record model="ir.ui.view" id="view_aged_sale_order_tree">
+			<field name="name">aged.sale.order.tree</field>
+			<field name="model">sale.order</field>
+			<field name="arch" type="xml" >
+				<tree string="Aged Sale Order Report" version="7.0" create='false'>
+					<field name="name" string='Sale Order No'/>
+		            <field name="date_order"/>
+		            <field name="partner_id"/>
+		            <field name="user_id"/>
+		            <field name="total_invoice" sum="Total"/>
+		            <field name="invoice_state"/>
+		            <field name="state" invisible='1'/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_aged_sale_order_search" model="ir.ui.view">
+	        <field name="name">aged.sale.order.search</field>	
+	        <field name="model">sale.order</field>
+	        <field name="arch" type="xml">
+	            <search string="Aged Sales Order Report">
+	            	<field name="invoice_state" string='State'/>
+	            	<field name="user_id" string="Sales Person" />
+	                <separator/>
+	                <field name="partner_id" string="Customer"/>
+	                <field name="date_order"/>
+	                <group expand="1" string="Group By...">
+	                    <filter string="Salesperson" icon="terp-personal" name="Salesperson" context="{'group_by':'user_id'}"/>
+	                    <filter string="Customer" icon="terp-partner"  name="Customer" context="{'group_by':'partner_id'}"/>
+	                    <filter string="Status" icon="terp-stock_effects-object-colorize" context="{'group_by':'invoice_state'}"/>
+	                    <filter string="Shop" icon="terp-shop" context="{'group_by':'shop_id'}"/>
+	                    <filter string="Date" icon="terp-date" domain="[]"  context="{'group_by':'date_order'}"/>
+	                </group>
+	            </search>
+	        </field>
+	    </record>
+
+	    <record id="action_aged_sale_order_report" model="ir.actions.act_window">
+	        <field name="name">Aged Sales Order Report</field>
+	        <field name="res_model">sale.order</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree</field>
+	        <field name="search_view_id" ref="view_aged_sale_order_search"/>
+	        <field name="view_id" ref="view_aged_sale_order_tree"/>
+	    </record>
+	</data>
+</openerp>

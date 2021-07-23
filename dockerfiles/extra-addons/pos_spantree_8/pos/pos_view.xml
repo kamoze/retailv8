@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+         <record id="view_pos_pos_form_ace" model="ir.ui.view" >
+            <field name="name">pos.order.form.ace</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='lines']/tree[@string='Order lines']/field[@name='product_id']" position="after">
+                   <field name="prodlot_id"/>
+                </xpath>
+                <field name="pos_reference" position="after">
+		           <field name="back_order"/>
+		        </field>
+		        <group name="order_total" position="replace">
+		            <group col="8">
+		                <group class="oe_left" col="8"> 
+		                    <group></group>
+		                    <group>
+		                        <field name="gift_coupon_amt"/>
+		                        <field name="redeem_point_amt"/>
+		                    </group>
+		                </group>
+		                <group class="oe_subtotal_footer oe_right" name="order_total" >
+		                    <group col="2" colspan="4"> 
+		                        <field name="amount_tax"/>
+		                    </group>
+		                    <group  col="2" colspan="4">
+		                        <div class="oe_subtotal_footer_separator oe_inline">
+		                            <label for="amount_total" />
+		                            <button name="button_dummy"
+		                                states="draft" string="(update)" class="oe_edit_only oe_link"/>
+		                        </div>
+		                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+		                    </group>
+		                </group>
+		            </group>
+		        </group>
+            </field>
+        </record>
+        
+        <record id="return_view_pos_tree" model="ir.ui.view" >
+		    <field name="name">ret.pos.order.tree</field>
+		    <field name="model">pos.order</field>
+		    <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+		    <field name="arch" type="xml">
+		       <field name="pos_reference" position="after">
+		           <field name="back_order"/>
+		        </field>
+		    </field>
+		</record>
+		
+		<record id="acespritech_account_journal_form" model="ir.ui.view">
+	        <field name="name">account.journal.form</field>
+	        <field name="model">account.journal</field>
+	        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+	        <field name="arch" type="xml">
+	            <field name="journal_user" position="after">
+	                <field name="pos_front_display"/>
+	            </field>
+	        </field>
+	    </record>
+
+    </data>
+</openerp>
